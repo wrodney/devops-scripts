@@ -1,0 +1,9 @@
+function Get-LatestVMImage([string]$imageFamily, [string]$location)
+2.{
+3.    #From https://michaelcollier.wordpress.com/2013/07/30/the-case-of-the-latest-windows-azure-vm-image/
+4.    $images = Get-AzureVMImage `
+5.    | where { $_.ImageFamily -eq $imageFamily } `
+6.        | where { $_.Location.Split(";") -contains $location} `
+7.        | Sort-Object -Descending -Property PublishedDate
+8.        return $images[0].ImageName;
+9.}

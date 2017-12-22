@@ -1,0 +1,91 @@
+function Get-LatestVMImage([string]$imageFamily, [string]$location)
+2.{
+3.    #From https://michaelcollier.wordpress.com/2013/07/30/the-case-of-the-latest-windows-azure-vm-image/
+4.    $images = Get-AzureVMImage `
+5.    | where { $_.ImageFamily -eq $imageFamily } `
+6.        | where { $_.Location.Split(";") -contains $location} `
+7.        | Sort-Object -Descending -Property PublishedDate
+8.        return $images[0].ImageName;
+9.}
+10. 
+11.  $prefix = "mydemo"
+12.$storageAccountName = ($prefix + "storage")
+13.               $location = "South Central US"
+14.$vnetConfigFilePath = "C:\temp\NetworkConfig.xml"
+15. 
+16.#$imageName = "a699494373c04fc0bc8f2bb1389d6106__Windows-Server-2012-Datacenter-201505.01-en.us-127GB.vhd"
+17.$imageName = Get-LatestVMImage -imageFamily "Windows Server 2012 R2 Datacenter" -location $location
+18. 
+19.$size = "Small"
+20.  $adminUsername = "YOUR_USERNAME_HERE"
+21.  $adminPassword = "YOUR_PASSWORD_HERE"
+22.$vnetName = ($prefix + "vnet-southcentral")
+23.
+24.#Use Get-AzureSubscription to find your subscription ID
+25.$subscriptionID = "YOUR_SUBSCRIPTION_ID_HERE"
+26. 
+27.#Set the current subscription
+28.Select-AzureSubscription -SubscriptionId $subscriptionID -Current
+29. 
+30.#Create storage account
+31.New-AzureStorageAccount -StorageAccountName $storageAccountName -Location $location
+32. 
+33.#Set the current storage account
+34.Set-AzureSubscription -SubscriptionId $subscriptionID -CurrentStorageAccountName $storageAccountName
+35. 
+36.#Create virtual network
+37.Set-AzureVNetConfig -ConfigurationPath $vnetConfigFilePath
+38. 
+39. 
+40.#Development environment
+41.$avSetName = "AVSET-DEV"
+42.$serviceName = ($prefix + "DEV")
+43.$subnetName = "Subnet-1"
+44. 
+45.  New-AzureService -ServiceName $serviceName -Location $location
+46.                         
+47.$vm1 = New-AzureVMConfig -Name "DEV1" -InstanceSize $size -ImageName $imageName -AvailabilitySetName $avSetName
+48.Add-AzureProvisioningConfig -VM $vm1 -Windows -AdminUsername $adminUsername -Password $adminPassword
+49.Set-AzureSubnet -SubnetNames $subnetName -VM $vm1
+50. 
+51.$vm2 = New-AzureVMConfig -Name "DEV2" -InstanceSize $size -ImageName $imageName -AvailabilitySetName $avSetName
+52.Add-AzureProvisioningConfig -VM $vm2 -Windows -AdminUsername $adminUsername -Password $adminPassword
+53.Set-AzureSubnet -SubnetNames $subnetName -VM $vm2
+54. 
+55.New-AzureVM -ServiceName $serviceName -VMs $vm1,$vm2 -VNetName $vnetName
+56. 
+57. 
+58.#Staging environment
+59.$avSetName = "AVSET-STAGE"
+60.$serviceName = ($prefix + "STAGE")
+61.$subnetName = "Subnet-2"
+62. 
+63.  New-AzureService -ServiceName $serviceName -Location $location
+64.                         
+65.$vm1 = New-AzureVMConfig -Name "STAGE1" -InstanceSize $size -ImageName $imageName -AvailabilitySetName $avSetName
+66.Add-AzureProvisioningConfig -VM $vm1 -Windows -AdminUsername $adminUsername -Password $adminPassword
+67.Set-AzureSubnet -SubnetNames $subnetName -VM $vm1
+68. 
+69.$vm2 = New-AzureVMConfig -Name "STAGE2" -InstanceSize $size -ImageName $imageName -AvailabilitySetName $avSetName
+70.Add-AzureProvisioningConfig -VM $vm2 -Windows -AdminUsername $adminUsername -Password $adminPassword
+71.Set-AzureSubnet -SubnetNames $subnetName -VM $vm2
+72. 
+73.New-AzureVM -ServiceName $serviceName -VMs $vm1,$vm2 -VNetName $vnetName
+74. 
+75. 
+76.#Production environment
+77.$avSetName = "AVSET-PROD"
+78.$serviceName = ($prefix + "PROD")
+79.$subnetName = "Subnet-3"
+80. 
+81.  New-AzureService -ServiceName $serviceName -Location $location
+82.                         
+83.$vm1 = New-AzureVMConfig -Name "PROD1" -InstanceSize $size -ImageName $imageName -AvailabilitySetName $avSetName
+84.Add-AzureProvisioningConfig -VM $vm1 -Windows -AdminUsername $adminUsername -Password $adminPassword
+85.Set-AzureSubnet -SubnetNames $subnetName -VM $vm1
+86. 
+87.$vm2 = New-AzureVMConfig -Name "PROD2" -InstanceSize $size -ImageName $imageName -AvailabilitySetName $avSetName
+88.Add-AzureProvisioningConfig -VM $vm2 -Windows -AdminUsername $adminUsername -Password $adminPassword
+89.Set-AzureSubnet -SubnetNames $subnetName -VM $vm2
+90. 
+91.New-AzureVM -ServiceName $serviceName -VMs $vm1,$vm2 -VNetName $vnetName
