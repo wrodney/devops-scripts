@@ -1,0 +1,3 @@
+$vnetConfigFilePath = "C:\temp\NetworkConfig.xml"
+2. 
+3.Set-AzureVNetConfig -ConfigurationPath $vnetConfigFilePath

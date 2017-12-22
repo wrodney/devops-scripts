@@ -1,0 +1,31 @@
+<NetworkConfiguration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/ServiceHosting/2011/07/NetworkConfiguration">
+2.  <VirtualNetworkConfiguration>
+3.    <VirtualNetworkSites>
+4.      <VirtualNetworkSite name="kirketestvnet-southcentral" Location="South Central US">
+5.        <AddressSpace>
+6.          <AddressPrefix>10.0.1.0/24</AddressPrefix>
+7.        </AddressSpace>
+8.        <Subnets>
+9.          <Subnet name="Subnet-1">
+10.            <AddressPrefix>10.0.1.0/27</AddressPrefix>
+11.          </Subnet>
+12.          <Subnet name="Subnet-2">
+13.            <AddressPrefix>10.0.1.32/27</AddressPrefix>
+14.          </Subnet>
+15.          <Subnet name="Subnet-3">
+16.            <AddressPrefix>10.0.1.64/26</AddressPrefix>
+17.          </Subnet>
+18.          <Subnet name="GatewaySubnet">
+19.            <AddressPrefix>10.0.1.128/29</AddressPrefix>
+20.          </Subnet>
+21.        </Subnets>
+22.        <Gateway>
+23.          <VPNClientAddressPool>
+24.            <AddressPrefix>10.0.0.0/24</AddressPrefix>
+25.          </VPNClientAddressPool>
+26.          <ConnectionsToLocalNetwork />
+27.        </Gateway>
+28.      </VirtualNetworkSite>      
+29.    </VirtualNetworkSites>
+30.  </VirtualNetworkConfiguration>
+31.</NetworkConfiguration>

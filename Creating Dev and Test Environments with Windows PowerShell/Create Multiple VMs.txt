@@ -1,0 +1,11 @@
+New-AzureService -ServiceName $serviceName -Location $location
+2.                         
+3.$vm1 = New-AzureVMConfig -Name "DEV1" -InstanceSize $size -ImageName $imageName -AvailabilitySetName $avSetName
+4.Add-AzureProvisioningConfig -VM $vm1 -Windows -AdminUsername $adminUsername -Password $adminPassword
+5.Set-AzureSubnet -SubnetNames $subnetName -VM $vm1
+6. 
+7.$vm2 = New-AzureVMConfig -Name "DEV2" -InstanceSize $size -ImageName $imageName -AvailabilitySetName $avSetName
+8.Add-AzureProvisioningConfig -VM $vm2 -Windows -AdminUsername $adminUsername -Password $adminPassword
+9.Set-AzureSubnet -SubnetNames $subnetName -VM $vm2
+10. 
+11.New-AzureVM -ServiceName $serviceName -VMs $vm1,$vm2 -VNetName $vnetName
