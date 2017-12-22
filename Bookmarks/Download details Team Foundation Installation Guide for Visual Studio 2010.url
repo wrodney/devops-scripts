@@ -1,0 +1,15 @@
+[DEFAULT]
+BASEURL=http://www.microsoft.com/downloads/en/details.aspx?FamilyID=2d531219-2c39-4c69-88ef-f5ae6ac18c9f
+[DOC_dapIfM0Child]
+BASEURL=http://www.microsoft.com/downloads/en/details.aspx?FamilyID=2d531219-2c39-4c69-88ef-f5ae6ac18c9f
+ORIGURL=javascript:void(document.write('<html><head><title>Advertisement</title></head><body id="dapIfM0Child" leftmargin="0" topmargin="0"><script type="text/javascript">var inDapIF=true; var inDapMgrIf=true;window.setTimeout("document.close();",30000);</script><iframe src="http://view.atdmt.com/MRT/iview/259403025/direct;;wi.160;hi.600/01?click=" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" topmargin="0" leftmargin="0" allowtransparency="true" width="160" height="600">\n<script language="JavaScript" type="text/javascript">\ndocument.write(\'<a href="http://clk.atdmt.com/MRT/go/259403025/direct;;wi.160;hi.600/01/" target="_blank"><img src="http://view.atdmt.com/MRT/view/259403025/direct;;wi.160;hi.600/01/"/></a>\');\n</script></iframe>\n</body></html>'));
+[DOC_dapIfM0]
+BASEURL=http://www.microsoft.com/downloads/en/details.aspx?FamilyID=2d531219-2c39-4c69-88ef-f5ae6ac18c9f
+ORIGURL=about:blank
+[{000214A0-0000-0000-C000-000000000046}]
+Prop3=19,2
+[InternetShortcut]
+URL=http://www.microsoft.com/downloads/en/details.aspx?FamilyID=2d531219-2c39-4c69-88ef-f5ae6ac18c9f
+IDList=
+IconFile=http://www.microsoft.com/favicon.ico
+IconIndex=1
